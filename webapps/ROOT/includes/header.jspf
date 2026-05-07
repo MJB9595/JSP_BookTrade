@@ -1,0 +1,28 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="model.Notification" %>
+<%@ page import="java.util.List" %>
+<meta name="color-scheme" content="light dark" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/theme.css?v=2" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/style.css?v=2" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+<header>
+  <div class="brand"><a href="<%=request.getContextPath()%>/index.jsp">전공책거래</a></div>
+  <nav>
+    <a href="<%=request.getContextPath()%>/books"><span class="material-symbols-outlined nav-icon">menu_book</span><span class="nav-label">도서목록</span></a>
+    <a href="<%=request.getContextPath()%>/notice/list.jsp"><span class="material-symbols-outlined nav-icon">campaign</span><span class="nav-label">공지/이벤트</span></a>
+    <a href="<%=request.getContextPath()%>/books/new"><span class="material-symbols-outlined nav-icon">upload_file</span><span class="nav-label">등록</span></a>
+    <a href="<%=request.getContextPath()%>/user/mypage.jsp"><span class="material-symbols-outlined nav-icon">account_circle</span><span class="nav-label">마이페이지</span></a>
+    <% model.User headerUser = (model.User)session.getAttribute("loginUser"); boolean hasNoti = false;
+       if(headerUser != null) { List<Notification> notis = repo.DataStore.getUnreadNotifications(headerUser.getId()); hasNoti = !notis.isEmpty(); } %>
+    <% if (headerUser == null) { %>
+      <a href="<%=request.getContextPath()%>/login"><span class="material-symbols-outlined nav-icon">login</span><span class="nav-label">로그인</span></a>
+    <% } else { %>
+      <a href="<%=request.getContextPath()%>/user/notification.jsp" style="position:relative;">
+        <span class="material-symbols-outlined nav-icon">notifications</span>
+        <% if(hasNoti) { %><span style="position:absolute; top:0; right:0; width:8px; height:8px; background:red; border-radius:50%;"></span><% } %>
+      </a>
+      <a href="<%=request.getContextPath()%>/logout"><span class="material-symbols-outlined nav-icon">logout</span><span class="nav-label">로그아웃</span></a>
+    <% } %>
+  </nav>
+</header>
+<div class="container">

@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/* theme.css — 브라우저 자동 라이트/다크 + 수동 강제(data-theme) 지원 */
+
+/* 기본: 라이트 (index.jsp의 보라색으로 통일) */
+:root{
+  color-scheme: light;
+  --bg:#ffffff;
+  --fg:#111827;
+  --muted:#6b7280;
+
+  --surface:#f8fafc;      /* 섹션 배경 */
+  --card-bg:#ffffff;      /* 카드 배경 */
+  --border:#e5e7eb;
+  --shadow:0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1);
+
+  --primary:#4f46e5;          /* ★ Indigo-600 */
+  --primary-strong:#4338ca;   /* Indigo-700 */
+  --primary-contrast:#ffffff;
+
+  --link:#4f46e5;
+  --link-hover:#4f46e5;       /* 전역 hover는 pill로 처리 */
+}
+
+/* 자동: 다크 */
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --bg:#0b0f14;
+    --fg:#e5e7eb;
+    --muted:#9ca3af;
+
+    --surface:#0c1218;
+    --card-bg:#0f141a;
+    --border:#1f2937;
+    --shadow:none;
+
+    --primary:#6366f1;         /* Indigo-500 (다크에서 더 선명) */
+    --primary-strong:#818cf8;  /* Indigo-400 */
+    --primary-contrast:#0b0f14;
+
+    --link:#6366f1;
+    --link-hover:#6366f1;
+  }
+}
+
+/* 수동 강제 테마 */
+html[data-theme="light"]{
+  color-scheme: light;
+  --bg:#ffffff; --fg:#111827; --muted:#6b7280;
+  --surface:#f8fafc; --card-bg:#ffffff; --border:#e5e7eb; --shadow:0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1);
+  --primary:#4f46e5; --primary-strong:#4338ca; --primary-contrast:#ffffff;
+  --link:#4f46e5; --link-hover:#4f46e5;
+}
+html[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0b0f14; --fg:#e5e7eb; --muted:#9ca3af;
+  --surface:#0c1218; --card-bg:#0f141a; --border:#1f2937; --shadow:none;
+  --primary:#6366f1; --primary-strong:#818cf8; --primary-contrast:#0b0f14;
+  --link:#6366f1; --link-hover:#6366f1;
+}
+
+/* 베이스 */
+html,body{background:var(--bg); color:var(--fg);}
+a{
+  color:var(--link);
+  text-decoration:none;
+  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+/* ★ 전역 링크 hover/focus — 보라 pill + 흰 글자, 밑줄 없음 */
+a:hover,
+a:focus-visible{
+  background: var(--primary);
+  color: var(--primary-contrast);
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+/* Header 기본 스타일 보완(hover는 전역 규칙이 적용됨) */
+header nav a{
+  color: var(--fg);
+  padding: 6px 12px;
+  border-radius: 10px;
+}

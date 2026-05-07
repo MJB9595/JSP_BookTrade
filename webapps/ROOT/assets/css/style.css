@@ -1,0 +1,297 @@
+@charset "UTF-8";
+*{box-sizing:border-box}
+
+body{
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,Arial,sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+}
+
+/* 헤더 */
+header{
+  background:var(--card-bg);
+  color:var(--fg);
+  padding:14px 20px;
+  display:flex;align-items:center;gap:14px;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+header .brand{font-size:18px;font-weight:700}
+header nav a{ color: var(--fg); padding: 6px 12px; border-radius: 10px; }
+
+/* 레이아웃 컨테이너 */
+.container{max-width:1100px;margin:22px auto;padding:0 16px}
+
+/* 카드/섹션 */
+.card,.section{
+  background:var(--card-bg);
+  color:var(--fg);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:16px;margin:12px 0;
+}
+.section-title{font-weight:700;margin:0 0 8px 0}
+
+/* 그리드 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+/* ================================
+   도서 목록용 그리드: 한 줄 최대 4개
+   ================================ */
+.grid.book-grid{
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width:1200px){
+  .grid.book-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width:900px){
+  .grid.book-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width:640px){
+  .grid.book-grid{ grid-template-columns: 1fr; }
+}
+
+/* ================================
+   도서 목록 카드 스타일
+   (샘플 이미지처럼)
+   ================================ */
+.book-card-list{
+  display:flex;
+  flex-direction:column;
+  padding:16px;
+  border-radius:18px;
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+/* 썸네일 영역 */
+.book-card-list .thumb-wrap{
+  width:100%;
+  border-radius:16px;
+  background:var(--surface);
+  padding:18px 18px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:14px;
+}
+
+.book-card-list img{
+  width:100%;
+  height:auto;
+  max-height:320px;      /* ⬅ 세로 길이 충분히 확보 (4:3 카드 기준 약 320px) */
+  object-fit:contain;
+  border-radius:12px;
+  border:none;
+  background:transparent;
+}
+
+/* 텍스트 영역 */
+.book-card-list .book-title{
+  margin:0 0 6px;
+  font-size:16px;
+  font-weight:700;
+}
+
+.book-card-list .book-title a{
+  color:var(--fg);
+  text-decoration:none;
+}
+.book-card-list .book-title a:hover{
+  text-decoration:underline;
+}
+
+/* 가격 + 상태 */
+.book-card-list .book-price{
+  margin:0 0 4px;
+  font-size:14px;
+}
+.book-card-list .price-main{
+  color:#ec4899;           /* 샘플처럼 살짝 핑크톤 포인트 */
+  font-weight:700;
+  margin-right:4px;
+}
+.book-card-list .price-sub{
+  color:var(--muted);
+}
+
+/* 학과 / 학년 */
+.book-card-list .book-meta{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* 구분선 */
+.book-card-list .book-sep{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:14px 0 8px;
+}
+
+/* 올린 사람 / 시간 */
+.book-card-list .book-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* 폼 */
+.label{display:block;font-size:12px;color:var(--muted);margin:6px 0}
+input,select,textarea{
+  width:100%;padding:10px;border-radius:10px;
+  border:1px solid var(--border);background:var(--card-bg);color:var(--fg);
+}
+button,.btn,.button,input[type="button"],input[type="submit"]{
+  padding:10px 14px;border-radius:10px;
+  border:1px solid var(--primary);
+  background:var(--primary);
+  color:var(--primary-contrast);
+  cursor:pointer;
+  transition: filter .15s ease, transform .05s ease, background .15s ease, border-color .15s ease;
+}
+button:hover,.btn:hover{filter:brightness(.97)}
+button:active,.btn:active{transform:translateY(1px)}
+button.secondary,.btn.secondary{background:transparent;color:var(--fg);border-color:var(--border)}
+button.ghost,.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--border)}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){ .form-row{grid-template-columns:1fr} }
+
+/* 북 썸네일 */
+.book-card img{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--surface);
+}
+
+/* 배지 */
+.badge,.chip{
+  display:inline-block;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:4px 10px;font-size:12px;color:var(--muted);
+}
+
+/* 검색/상세검색 */
+.searchbar{display:flex;gap:8px;align-items:center}
+.searchbar input[type="text"]{flex:1}
+.searchbar button{width:auto;padding:10px 14px}
+.adv-toggle{background:transparent;border:1px solid var(--border);color:var(--fg)}
+.adv-panel{margin-top:12px;display:none;background:var(--surface);border:1px dashed var(--border);border-radius:12px;padding:12px}
+.adv-panel.show{display:block}
+.small{font-size:12px;color:var(--muted)}
+
+/* 2단 레이아웃 */
+.two-col{display:grid;grid-template-columns:280px 1fr;gap:16px}
+@media (max-width:960px){ .two-col{grid-template-columns:1fr} }
+
+/* aside/미리보기 */
+.aside{background:var(--surface);border:1px dashed var(--border);border-radius:12px;padding:12px;text-align:center}
+.aside img{max-width:100%;border-radius:8px;border:1px solid var(--border)}
+.dropzone{border:2px dashed var(--border);border-radius:12px;padding:16px;background:var(--card-bg)}
+.note{font-size:12px;color:var(--muted)}
+
+/* 기타 */
+.divider{height:1px;background:var(--border);margin:12px 0}
+footer{color:var(--muted);text-align:center;padding:20px}
+
+.kvlist{display:grid;grid-template-columns:120px 1fr;row-gap:6px;column-gap:10px;margin-top:8px}
+.kvlist .k{color:var(--muted)}
+.kvlist .v{color:var(--fg)}
+.book-cover--small{width:50%;max-width:160px;margin:0 auto;display:block}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+/* 헤더 */
+header{
+  background:var(--card-bg);
+  color:var(--fg);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+
+header .brand{
+  font-size:18px;
+  font-weight:700;
+}
+
+/* ✅ 전공책거래: 기본 보라색, hover 반응 없음 */
+header .brand a{
+  color:#635BFF;          /* index.jsp 에 쓰던 진한 보라 */
+  text-decoration:none;
+}
+header .brand a:hover{
+  color:#635BFF;          /* hover 때도 그대로 */
+  text-decoration:none;
+}
+
+/* ✅ 네비게이션 링크만 pill 효과 적용 */
+header nav a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  border-radius:999px;
+  color:var(--fg);
+  text-decoration:none;
+  transition:background .15s ease, color .15s ease;
+}
+
+/* pill 배경 (hover 때만 보라색) */
+header nav a::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  background:transparent;
+  z-index:-1;
+  transition:background .15s ease;
+}
+
+/* hover 시: pill 보라 + 글자/아이콘 흰색 */
+header nav a:hover{
+  color:#ffffff;
+}
+header nav a:hover::before{
+  background:#635BFF;     /* 진한 보라 */
+}
+
+/* 전공책거래(브랜드)는 항상 동일하게 보이도록 고정 */
+header .brand a,
+header .brand a:hover {
+  color: #635BFF;          /* 항상 보라색 */
+  text-decoration: none;   /* 밑줄 X */
+  background: transparent; /* 배경 변화 X */
+}
+
+/* =============================
+   책 카드 안 링크는 pill/밑줄 제거
+   (list.jsp, index.jsp 공통)
+   ============================= */
+.book-card a,
+.book-card a:visited{
+  padding: 0;                 /* 헤더처럼 여백 X */
+  border-radius: 0;           /* pill 모양 제거 */
+  background: transparent;
+  text-decoration: none;
+  color: var(--fg);           /* 기본 글자색 */
+}
+
+/* hover 시에도 pill/밑줄 없이 색만 살짝 바꾸고 싶으면 */
+.book-card a:hover{
+  background: transparent;    /* 보라색 배경 막기 */
+  text-decoration: none;      /* 밑줄 막기 */
+  color: var(--primary-strong);  /* 살짝 강조 색, 원하면 var(--fg)로 */
+}

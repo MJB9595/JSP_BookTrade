@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  # 1. 데이터베이스 (MariaDB)
+  db:
+    image: mariadb:10.11
+    container_name: uni_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_DATABASE=ubt_library
+      - MYSQL_USER=ubt_user
+      - MYSQL_PASSWORD=ubt_pass
+      - TZ=Asia/Seoul
+    volumes:
+      - ./db_data:/var/lib/mysql
+    networks:
+      - uni_net
+    restart: always
+
+  # 2. 웹 서버 (Tomcat - JDK 21 버전 사용)
+  web:
+    image: tomcat:9.0-jdk21
+    container_name: uni_web
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webapps:/usr/local/tomcat/webapps
+    environment:
+      - TZ=Asia/Seoul
+    depends_on:
+      - db
+    networks:
+      - uni_net
+    restart: always
+
+  # 3. DB 관리 도구 (phpMyAdmin)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: uni_pma
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - uni_net
+
+networks:
+  uni_net:
+    driver: bridge
